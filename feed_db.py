@@ -224,15 +224,15 @@ print("Tables created successfully")
 # to completely reload the CSV data.
 
 
-cursor.execute("""
-    TRUNCATE TABLE
-        public.ratings,
-        public.payments,
-        public.rides,
-        public.vehicles,
-        public.users
-    CASCADE;
-""")
+# cursor.execute("""
+#     TRUNCATE TABLE
+#         public.ratings,
+#         public.payments,
+#         public.rides,
+#         public.vehicles,
+#         public.users
+#     CASCADE;
+# """)
 
 
 
