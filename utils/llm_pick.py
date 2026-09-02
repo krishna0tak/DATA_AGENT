@@ -21,19 +21,19 @@ def pick_llm(level: str):
         llm = ChatOpenAI(
             model_name="gpt-5.6-luna",
             temperature=0,
-            model_kwargs={"reasoning_effort": "none"},
+            reasoning_effort="none",
         )
     elif level == "medium":
         llm = ChatOpenAI(
             model_name="gpt-5.6-terra",
             temperature=0,
-            model_kwargs={"reasoning_effort": "none"},
+            reasoning_effort="none",
         )
     elif level == "high":
         llm = ChatOpenAI(
             model_name="gpt-5.6-sol",
             temperature=0,
-            model_kwargs={"reasoning_effort": "none"},
+            reasoning_effort="none",
         )
     elif level == "claude":
         llm = ChatAnthropic(model_name="claude-sonnet-5")
