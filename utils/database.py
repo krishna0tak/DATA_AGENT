@@ -14,14 +14,14 @@ class DatabaseUtil:
     def schema_details(self, schema_name):
         schema_info_context = ""
         connection = self.connection
-        cursor = None
+        
+        cursor = connection.cursor()
+        schema_info_context = f"Database Schema: {schema_name}\n\n"
 
         try:
             if connection is None:
                 return "Database connection unavailable."
 
-            cursor = connection.cursor()
-            schema_info_context = f"Database Schema: {schema_name}\n\n"
 
             cursor.execute(
                 "SELECT table_name FROM information_schema.tables WHERE table_schema = %s",
@@ -60,6 +60,35 @@ class DatabaseUtil:
 
         return schema_info_context
 
+    def execute_sql(self, query):
+        connection = self.connection
+        cursor = None
+        result = None
+
+        try:
+            if connection is None:
+                return "Database connection unavailable."
+
+            cursor = connection.cursor()
+            cursor.execute(query)
+            result = cursor.fetchall()
+            connection.commit()
+            return str(result)
+
+        except Exception as e:
+            print(f"Error executing query: {e}")
+            return None
+
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connection is not None:
+                connection.close()
+
+
+
+
+
 
 if __name__ == "__main__":
     db = DatabaseUtil({
@@ -69,6 +98,13 @@ if __name__ == "__main__":
         "host": "localhost",
         "port": 5432,
     })
+
+
+
+
+
+
+
 
     result = db.schema_details("public")
 
