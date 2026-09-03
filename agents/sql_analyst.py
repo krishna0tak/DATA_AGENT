@@ -178,15 +178,16 @@ sql_agent_graph.add_edge("represent_final_answer", END)
 #compile the graph
 sql_analyst = sql_agent_graph.compile()
 
-if __name__ == "__main__":  
+if __name__ == "__main__":
+    try:
+        from IPython.display import Image
+        img = Image(sql_analyst.get_graph().draw_mermaid_png())
+        with open("sql_analyst_graph.png", "wb") as f:
+            f.write(img.data)
+    except Exception:
+        pass
 
-  # Optional
-#from IPython.display import display, Image
-#img = Image(sql_analyst.get_graph().draw_mermaid_png())
-#with open("sql_analyst_graph.png", "wb") as f:
- #       f.write(img.data)
-
- input_schema = {
+    input_schema = {
         "messages": [],
         "user_question": "What are the different types of Payment Methods we have in our database",
         "curated_ques": "",
@@ -196,14 +197,13 @@ if __name__ == "__main__":
         "comments": "",
         "sql_query_execution_result": "",
         "final_answer": ""
-    }     
+    }
 
- # Execute the Graph
-sql_analyst_response = sql_analyst.invoke(input_schema)
-print(sql_analyst_response['messages'])  # Print the final response from the SQL analyst agent
-print("--------------------------------------------")
-print(sql_analyst_response['generated_sql_query'])  
-print("--------------------------------------------")
-print(sql_analyst_response['sql_query_execution_result'])
-print("--------------------------------------------")
-print(sql_analyst_response['prompt_query_context'])
+    sql_analyst_response = sql_analyst.invoke(input_schema)
+    print(sql_analyst_response['messages'])
+    print("--------------------------------------------")
+    print(sql_analyst_response['generated_sql_query'])
+    print("--------------------------------------------")
+    print(sql_analyst_response['sql_query_execution_result'])
+    print("--------------------------------------------")
+    print(sql_analyst_response['prompt_query_context'])
