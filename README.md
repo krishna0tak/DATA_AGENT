@@ -11,15 +11,7 @@ An autonomous, multi-agent AI system for database reporting (**Text-to-SQL with 
 
 DATA_AGENT interprets natural language requests, dynamically classifies intent via a **Master Router**, and delegates execution to specialized sub-agent graphs with strict security and validation controls.
 
----
 
-## 📸 Dashboard & UI Preview
-
-![DATA_AGENT Dashboard](streamlit_dashboard.png)
-
-*Interactive Streamlit dashboard displaying live natural language query execution, state graph execution visualization, SQL generation, Security Judge validation, and dynamic query result tables.*
-
----
 
 ## 🌟 Key Capabilities & Features
 
@@ -134,12 +126,4 @@ uv run python run_all.py --api
 
 ---
 
-## 📹 Pitch Video Script
 
-Looking for the 5-minute pitch demo walkthrough script and presentation guide? Check out [`PITCH_SCRIPT.md`](PITCH_SCRIPT.md).
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for details.
