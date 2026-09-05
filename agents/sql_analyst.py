@@ -6,6 +6,9 @@ from utils.llm_pick import pick_llm
 from models.schema import AgentSchema, JudgeSchema  
 from utils.database import DatabaseUtil
 from langgraph.graph import StateGraph, START , END 
+from dotenv import load_dotenv
+load_dotenv()
+
 # ---------------------- AI Agent ---------------------- #
 def curate_ques(state: AgentSchema) -> AgentSchema:
     user_question = state.user_question #pydantic model obj
@@ -80,7 +83,8 @@ def is_safe_sql(state: AgentSchema) -> AgentSchema:
     Here's the SQL query to evaluate:
     {sql_query}"""
     response = llm_judge.invoke(prompt).model_dump() 
-    state.is_safe_sql_response = response['answer']  # Update the state with the safety judgment response
+    state.is_safe = response['answer']  # Update the state with the safety judgment response
+    state.comments = response.get('comments', '')
     return state
 
 
@@ -158,7 +162,7 @@ sql_agent_graph.add_edge("generate_sql", "is_safe_sql")
 
 #Conditional edges based on the safety of the SQL query
 def is_safe_sql_edge(state: AgentSchema) -> str:
-    is_safe = state.is_safe_sql_response
+    is_safe = state.is_safe
     if str(is_safe).lower() == "yes":
         return "execute_sql"
     return "canceled_query"
